@@ -385,7 +385,7 @@
                     }
                     echo '</div><p>Date : ',$commentsListFetched['date'],'</p>';
                     if($auteur[0] == $_SESSION['username']) {
-                        echo '<a href="" class="editComment">✏️ Modifier ce commentaire</a><a href="deleteComment.php?id=',$commentsListFetched['commentId'],'" class="removeComment">🗑 Supprimer ce commentaire</a>';
+                        echo '<a href="modifierComment.php?id=',$commentsListFetched['commentId'],'" class="editComment">✏️ Modifier ce commentaire</a><a href="deleteComment.php?id=',$commentsListFetched['commentId'],'" class="removeComment">🗑 Supprimer ce commentaire</a>';
                     }
                     echo '</div></div></div>';
                 }
