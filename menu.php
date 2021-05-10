@@ -2,7 +2,7 @@
 echo '
 <div id="menu">
     <a href="index.php">
-        <img id="logoSite" src="Ressources/img/MCU_logo.png" onmouseover="afficher_logo_gif(this)" onmouseout="masquer_logo_gif(this)">
+        <img id="logoSite" src="Ressources/img/MCU_logo.png" alt="Logo du site" onmouseover="afficher_logo_gif(this)" onmouseout="masquer_logo_gif(this)">
     </a>
     <nav>
         <a href="index.php" id="accueilMenu">Accueil</a>

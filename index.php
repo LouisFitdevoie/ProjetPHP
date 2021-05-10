@@ -1,96 +1,12 @@
 <?php session_start() ?>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
 	<title>Accueil</title>
 	<meta charset="utf-8">
 	<meta name='author' content='Louis Fitdevoie'>
 	<meta name="viewport" content="width=device-width,initial-scale=1.0">
-	<style>
-		/* MENU */
-		body {
-			background-color: rgb(15,15,15);
-			color: white;
-			font-family: Calibri, Arial, sans-serif;
-			display: flex;
-			flex-flow: column nowrap;
-		}
-		#logoSite {
-			max-width: 280px;
-			max-height: 150px;
-			border: 5px solid #555555;
-			border-radius: 22.5px;
-			background-color: rgb(15,15,15);
-		}
-		#menu {
-			display: flex;
-			flex-flow: row nowrap;
-			margin-left: auto;
-			margin-right: auto;
-		}
-		nav {
-			display: flex;
-			flex-flow: row nowrap;
-			align-items: center;
-		}
-		nav a {
-			display: block;
-			border: 2px solid #555555;
-			background-color: #555555;
-			text-decoration: none;
-			color: white;
-			padding: 15px;
-			text-align: center;
-		}
-		@media screen and (max-width: 750px) {
-			/* FAIRE LE MENU BURGER */
-			nav {
-				display: none !important;
-			}
-		}
-		@media screen and (min-width: 750px) and (max-width: 900px) {
-			nav a {
-				font-size: 16px;
-			}
-		}
-		@media screen and (min-width: 900px) {
-			nav a {
-				font-size: 24px;
-			}
-		}
-		nav a:last-child {
-			border-top-right-radius: 22.50px;
-			border-bottom-right-radius: 22.50px;
-		}
-		nav a:hover, nav a:focus {
-			background-color: #EEEEEE;
-			border: 2px solid #353535;
-			color: #555555;
-			transition-duration: 500ms;
-		}
-		nav a:active {
-			background-color: #BBBBBB;
-		}
-		nav a.selected {
-			background-color: #E13930 !important;
-			color: white !important;
-			border: 2px solid #353535;
-		}
-		/* RESTE */
-		#mainAccueil {
-			margin-top: 25px;
-			margin-left: auto;
-			margin-right: auto;
-			background-color: #FFFFFF10;
-			border-radius: 15px;
-			max-width: 650px;
-		}
-		#mainAccueil #explication {
-			text-align: justify;
-			max-width: 600px;
-			margin: 10px;
-			padding: 0px;
-		}
-	</style>
+    <link rel="stylesheet" href="Ressources/style.css">
 </head>
 <body>
 	<?php
@@ -102,7 +18,6 @@
 			<?php
 				if(isset($_SESSION['username'])) {
 					echo '<h3>Bienvenue ',($_SESSION['username']),' !</h3>';
-					
 				} else {
 					echo "Vous n'êtes pas connecté !";
 				}
@@ -115,4 +30,3 @@
 	</div>
 </body>
 </html>
-

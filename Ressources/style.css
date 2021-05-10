@@ -1,0 +1,845 @@
+body {
+    background-color: rgb(15,15,15);
+    color: white;
+    font-family: Calibri, Arial, sans-serif;
+    display: flex;
+    flex-flow: column nowrap;
+}
+#logoSite {
+    max-width: 280px;
+    max-height: 150px;
+    border: 5px solid #555555;
+    border-radius: 22.5px;
+    background-color: rgb(15,15,15);
+}
+#menu {
+    display: flex;
+    flex-flow: row nowrap;
+    margin-left: auto;
+    margin-right: auto;
+}
+nav {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+}
+nav a {
+    display: block;
+    border: 2px solid #555555;
+    background-color: #555555;
+    text-decoration: none;
+    color: white;
+    padding: 15px;
+    text-align: center;
+}
+@media screen and (max-width: 750px) {
+    nav {
+        display: none !important;
+    }
+}
+@media screen and (min-width: 750px) and (max-width: 900px) {
+    nav a {
+        font-size: 16px;
+    }
+}
+@media screen and (min-width: 900px) {
+    nav a {
+        font-size: 24px;
+    }
+}
+nav a:last-child {
+    border-top-right-radius: 22.50px;
+    border-bottom-right-radius: 22.50px;
+}
+nav a:hover, nav a:focus {
+    background-color: #EEEEEE;
+    border: 2px solid #353535;
+    color: #555555;
+    transition-duration: 500ms;
+}
+nav a:active {
+    background-color: #BBBBBB;
+}
+nav a.selected {
+    background-color: #E13930 !important;
+    color: white !important;
+    border: 2px solid #353535;
+}
+/* LOGIN.PHP */
+#loginDiv {
+    display: block;
+    background-color: #FFFFFF10;
+    width: 350px;
+    margin-top: 25px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    border-radius: 15px;
+}
+#loginDiv form {
+    margin-bottom: 0px;
+}
+#loginDiv table {
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+}
+#submitBtn {
+    font-size: 0.8em;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 2px 15px;
+    border: 1px solid rgb(15,15,15);
+    border-radius: 5px;
+    background-color: #EEEEEE;
+    color: #555555;
+    cursor: pointer;
+    transition: 350ms;
+}
+#submitBtn:hover, #submitBtn:focus {
+    background-color: #555555;
+    color: #EEEEEE;
+    transition: 350ms;
+}
+/* INSCRIPTION.PHP */
+#inscriptionDiv {
+    display: block;
+    background-color: #FFFFFF10;
+    width: 460px;
+    margin-top: 25px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    border-radius: 15px;
+}
+#inscriptionDiv form {
+    margin-bottom: 0px;
+}
+#inscriptionDiv table {
+    margin-top: 15px;
+    margin-left: auto;
+    margin-right: auto;
+}
+#inscriptionDiv #submitBtn {
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+.g-recaptcha > div {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+}
+/* INDEX.PHP */
+#mainAccueil {
+    margin-top: 25px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #FFFFFF10;
+    border-radius: 15px;
+    max-width: 650px;
+}
+#mainAccueil #explication {
+    text-align: justify;
+    max-width: 600px;
+    margin: 10px;
+    padding: 0px;
+}
+/* ADDFILM.PHP */
+#addFilmH1 {
+    text-align: center;
+    margin-bottom: 0px;
+}
+#addFilmDiv {
+    display: block;
+    background-color: #FFFFFF10;
+    max-width: 900px;
+    margin-top: 25px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 150px;
+    text-align: center;
+    border-radius: 15px;
+}
+#addFilmDiv form {
+    margin-bottom: 0px;
+}
+#addFilmDiv table {
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px;
+    text-align: right;
+}
+#addFilmDiv table input {
+    width: 100%;
+}
+#addFilmDiv #duree {
+    width: 50%;
+}
+#addFilmDiv #dureeDiv {
+    text-align: center;
+}
+#addFilmDiv #duree input {
+    width: 25%;
+}
+#addFilmDiv #duree input:first-child {
+    margin-right: 5px;
+}
+#addFilmDiv #duree input:last-child {
+    margin-left: 5px;
+}
+#addFilmDiv textarea {
+    resize: none;
+    width: 100%;
+    font-family: Calibri, Arial, sans-serif;
+    font-size: 0.8em;
+}
+#addFilmDiv table input, #addFilmDiv #streamingSelect, #addFilmDiv #ordreSortie {
+    text-align: center;
+}
+/* ADMIN.PHP */
+#adminH1 {
+    text-align: center;
+}
+.adminTh {
+    vertical-align: middle;
+}
+div.userTable {
+    margin-left: 25px;
+    margin-bottom: 20px;
+}
+table.user td, table.user th {
+    border: 1px solid white;
+}
+#userTables {
+    display: flex;
+    flex-flow: row wrap;
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+    align-items: safe center;
+}
+.buttonsDiv a {
+    display: inline-block;
+    text-decoration: none;
+    color: white;
+    margin-top: 3px;
+    padding: 2px;
+    border: 2px solid white;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 500ms;
+}
+.buttonsDiv {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+}
+.buttonsDiv a:hover, .buttonsDiv a:focus {
+    background-color: white;
+    color: black;
+    transition: 500ms;
+}
+/* FILMS.PHP */
+#colonneFilms {
+    display: flex;
+    flex-flow: column wrap;
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.film {
+    display: flex;
+    flex-flow: row nowrap;
+    padding: 20px;
+    align-items: center;
+}
+.film div {
+    width: 100%;
+    margin-left: 10px;
+    text-align: center;
+}
+.film div a {
+    text-decoration: none;
+    color: #555555;
+    padding-right: 15px;
+    padding-left: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 20px;
+    border: 2px solid #555555;
+    background-color: white;
+    transition: 500ms;
+}
+.film div a:hover, .film div a:focus {
+    background-color: #333333;
+    color: white;
+    transition: 500ms;
+}
+.film div a:active {
+    background-color: #222222;
+}
+.filmImage {
+    max-width: 200px;
+    height: auto;
+    border: 5px solid #555555;
+}
+#addFilmBtn {
+    width: 120px;
+    text-align: center;
+    text-decoration: none;
+    color: #555555;
+    padding-right: 15px;
+    padding-left: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 20px;
+    border: 2px solid #555555;
+    background-color: white;
+    margin-left: auto;
+    margin-right: auto;
+}
+a#addFilmBtn:hover, a#addFilmBtn:focus {
+    background-color: #333333;
+    color: white;
+    transition: 500ms;
+}
+a#addFilmBtn:active {
+    background-color: #222222;
+}
+.ligne {
+    width: 100%;
+    height: 1px;
+}
+.ligne > div {
+    height: 100%;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #555555;
+}
+/* INFOSFILM.PHP */
+div#infosFilmContent {
+    display: flex;
+    flex-flow: column nowrap;
+    max-width: 1000px;
+    margin-left: auto;
+    margin-top: 20px;
+    margin-right: auto;
+    text-align: justify;
+    padding: 15px;
+    border: 2px solid rgb(99,99,99);
+    border-radius: 15px;
+}
+#infosFilmContent h1 {
+    text-align: center;
+}
+#infosFilmContent h2 {
+    font-size: 1.1em;
+    margin-bottom: 5px;
+}
+#infosFilmContent p {
+    margin-top: 5px;
+}
+#filmSorti *, #infosFilmContent #duree *, #bandeAnnonce * {
+    display: inline;
+}
+#bandeAnnonce h2 {
+    color: white;
+}
+#detailFilmImage {
+    max-width: 250px;
+    height: auto;
+    border: 5px solid rgb(99,99,99);
+    margin-right: 20px;
+}
+#bandeAnnonce {
+    color: red;
+    text-decoration: none;
+    cursor: pointer;
+}
+#streamingLink {
+    color: red;
+    text-decoration: none;
+    cursor: pointer;
+}
+#infosFilmContent a {
+    margin-left: auto;
+    margin-right: auto;
+}
+#adminBtn {
+    margin-top: 10px;
+    display: flex;
+    flex-flow: row nowrap;
+}
+a#modifFilmBtn {
+    display: block;
+    width: 120px;
+    text-align: center;
+    text-decoration: none;
+    color: #555555;
+    padding-right: 15px;
+    padding-left: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 20px;
+    border: 2px solid #555555;
+    background-color: white;
+    margin-left: auto;
+    margin-right: auto;
+    transition: 500ms;
+}
+a#modifFilmBtn:hover, a#modifFilmBtn:focus {
+    background-color: #333333;
+    color: white;
+    transition: 500ms;
+}
+a#modifFilmBtn:active {
+    background-color: #222222;
+}
+a#deleteFilmBtn {
+    display: block;
+    width: 150px;
+    text-align: center;
+    text-decoration: none;
+    color: #555555;
+    padding-right: 15px;
+    padding-left: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 20px;
+    border: 2px solid #555555;
+    background-color: white;
+    margin-left: auto;
+    margin-right: auto;
+    transition: 250ms;
+}
+a#deleteFilmBtn:hover, a#deleteFilmBtn:focus {
+    background-color: #E13930;
+    color: white;
+    transition: 500ms;
+}
+a#deleteFilmBtn:active {
+    background-color: #C91708;
+}
+div#newComment h2 {
+    text-align: center;
+    margin-bottom: 5px;
+}
+#addCommentForm {
+    margin: 5px;
+    text-align: center;
+}
+#addCommentForm textarea {
+    font-family: Calibri, Arial, sans-serif;
+    font-size: 0.9em;
+    width: 714px;
+    height: 100px;
+}
+div#note * {
+    display: inline-block;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+div#note select {
+    width: 50px;
+}
+#infosFilmContent select {
+    width: 50px;
+}
+#submitBtn {
+    font-size: 0.8em;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 2px 15px;
+    border: 1px solid rgb(15,15,15);
+    border-radius: 5px;
+    background-color: #EEEEEE;
+    color: #555555;
+    cursor: pointer;
+    transition: 350ms;
+}
+#submitBtn:hover, #submitBtn:focus {
+    background-color: #555555;
+    color: #EEEEEE;
+    transition: 350ms;
+}
+div#comments {
+    display: flex;
+    flex-flow: column wrap;
+}
+div#comments h2 {
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+.comment {
+    background-color: rgb(33,33,33);
+    width: 750px;
+    border: 1px solid rgb(99,99,99);
+    border-radius: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10px;
+}
+.container {
+    margin: 0;
+    width: 100%;
+}
+.auteur {
+    text-align: center;
+    border-bottom: 1px solid rgb(99,99,99);
+    font-size: 1.1em
+}
+.auteur > div {
+    height: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-style: italic;
+}
+.commentContent {
+    padding: 10px;
+}
+#textareaComment {
+    resize: none;
+}
+.dateEtNote {
+    border-top: 1px solid rgb(99,99,99);
+    margin: 0;
+}
+.dateEtNote > * {
+    display: inline-block;
+    margin: 0;
+    width: 50%;
+    padding: 5px 0px;
+    text-align: center;
+}
+.star {
+    display: inline;
+    color: white;
+}
+.star.yellow {
+    color: red;
+}
+.editComment {
+    text-decoration: none;
+    color: white;
+    border-top: 1px solid rgb(99,99,99);
+    border-bottom-left-radius: 15px;
+    transition: 0.5s;
+}
+.editComment:hover, .editComment:focus {
+    background-color: rgb(190,0,0);
+    transition: 0.5s;
+}
+.removeComment {
+    text-decoration: none;
+    color: white;
+    border-top: 1px solid rgb(99,99,99);
+    border-bottom-right-radius: 15px;
+    transition: 0.5s;
+}
+.removeComment:hover, .removeComment:focus {
+    background-color: rgb(190,0,0);
+    transition: 0.5s;
+}
+#noComment {
+    width: auto;
+    text-align: center;
+}
+/* MODIFIERCOMMENT.PHP */
+#modifierCommentContent textarea {
+    font-family: Calibri, Arial, sans-serif;
+    font-size: 0.9em;
+    width: 100%;
+    height: 100px;
+}
+#modifierCommentContent select {
+    width: 50px;
+}
+/* MODIFIERFILM.PHP */
+#modifFilmH1 {
+    text-align: center;
+    margin-bottom: 0px;
+}
+#modifFilmDiv {
+    display: block;
+    background-color: #FFFFFF10;
+    max-width: 900px;
+    margin-top: 25px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 150px;
+    text-align: center;
+    border-radius: 15px;
+}
+#modifFilmDiv form {
+    margin-bottom: 0px;
+}
+#modifFilmDiv table {
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px;
+    text-align: right;
+}
+#modifFilmDiv #submitBtn {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+#modifFilmDiv table input {
+    width: 100%;
+}
+#modifFilmDiv #duree {
+    width: 50%;
+}
+#modifFilmDiv #dureeDiv {
+    text-align: center;
+}
+#modifFilmDiv #duree input {
+    width: 25%;
+}
+#modifFilmDiv #duree input:first-child {
+    margin-right: 5px;
+}
+#modifFilmDiv #duree input:last-child {
+    margin-left: 5px;
+}
+#modifFilmDiv textarea {
+    resize: none;
+    width: 100%;
+    font-family: Calibri, Arial, sans-serif;
+    font-size: 0.8em;
+}
+#modifFilmDiv table input, #modifFilmDiv #streamingSelect, #modifFilmDiv #ordreSortie {
+    text-align: center;
+}
+/* MODIFIERPASSWORD.PHP */
+#modifPasswordDiv form {
+    padding: 0 5px;
+}
+#modifPasswordDiv {
+    display: block;
+    background-color: #FFFFFF10;
+    width: 520px;
+    margin-top: 25px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    border-radius: 15px;
+}
+#modifPasswordDiv form {
+    margin-bottom: 0px;
+}
+#modifPasswordDiv table {
+    margin-top: 15px;
+    margin-left: auto;
+    margin-right: auto;
+}
+#modifPasswordDiv #submitBtn {
+    margin-top: 0px;
+    margin-bottom: 10px;
+}
+/* PROFIL.PHP */
+#container {
+    margin-top: 25px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #FFFFFF10;
+    border-radius: 15px;
+    max-width: 650px;
+}
+#container h3 {
+    text-align: center;
+}
+#profilContent {
+    max-width: 600px;
+    margin: 10px;
+    padding: 0px;
+}
+#profilContent a {
+    display: inline-block;
+    width: 50%;
+    text-align: center;
+    border-top: 1px solid rgb(99,99,99);
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-decoration: none;
+    color: white;
+    transition: 0.5s;
+}
+a#editPassword {
+    border-bottom-left-radius: 15px;
+    width: 50%;
+}
+#editPassword:hover, #editPassword:focus {
+    background-color: rgb(190,0,0);
+    transition: 0.5s;
+}
+a#deleteUser {
+    border-bottom-right-radius: 15px;
+    width: 50%;
+}
+#deleteUser:hover, #deleteUser:focus {
+    background-color: rgb(190,0,0);
+    transition: 0.5s;
+}
+#scrollMessagesContainer {
+    margin-top: 25px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #FFFFFF10;
+    border-radius: 15px;
+    max-width: 650px;
+    text-align: center;
+}
+#scrollMessagesContainer h3 {
+    margin-top: 5px;
+}
+#scrollMessagesDiv {
+    width: 600px;
+    max-height: 350px;
+    overflow-y: scroll;
+    scrollbar-width: thin;
+    margin: 10px;
+    padding: 0px;
+}
+.message {
+    margin: 10px;
+    background-color: #555555;
+    border-radius: 15px;
+    border: 1px solid #EEEEEE;
+    color: white;
+}
+.destinataire {
+    background-color: #EEEEEE !important;
+    border: 3px solid #555555 !important;
+    color: #555555 !important;
+}
+.message table {
+    width: 100%;
+}
+.message table * {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.message th {
+    font-style: italic;
+    padding-bottom: 10px;
+}
+.message .messageContent {
+    text-align: left;
+}
+.message .messageDate {
+    padding-top: 10px;
+}
+.message table * {
+    text-align: center;
+}
+#newMessageContainer {
+    margin-top: 25px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #FFFFFF10;
+    border-radius: 15px;
+    max-width: 650px;
+    text-align: center;
+}
+.hidden {
+    display: none;
+}
+.message table tr td .repondreBtn {
+    display: block;
+    font-size: 0.8em;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 2px 15px;
+    border: 1px solid rgb(15,15,15);
+    border-radius: 5px;
+    background-color: #EEEEEE;
+    color: #555555;
+    cursor: pointer;
+    transition: 350ms;
+    text-decoration: none;
+}
+.message table tr td .repondreBtn:hover, .message table tr td .repondreBtn:focus {
+    background-color: #333333;
+    color: #EEEEEE;
+    transition: 350ms;
+}
+#newMessage {
+    width: 600px;
+    margin: 10px;
+    padding: 0px;
+}
+#messageContent {
+    resize: none;
+    border: 0px;
+    width: 596px;
+    height: 50px;
+    font-family: Calibri, Arial, sans-serif;
+    font-size: 0.8em;
+}
+#btnDiv {
+    width: auto;
+}
+#addMessageBtn {
+    display: block;
+    font-size: 0.8em;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 2px 15px;
+    border: 1px solid rgb(15,15,15);
+    border-radius: 5px;
+    background-color: #EEEEEE;
+    color: #555555;
+    cursor: pointer;
+    transition: 350ms;
+}
+#addMessageBtn:hover, #addMessageBtn:focus {
+    background-color: #555555;
+    color: #EEEEEE;
+    transition: 350ms;
+}
+/* SUPPRIMERPROFIL.PHP */
+#suppFilmH1 {
+    text-align: center;
+    margin-bottom: 0px;
+}
+#suppFilmDiv {
+    display: block;
+    background-color: #FFFFFF10;
+    max-width: 900px;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    border-radius: 15px;
+}
+#suppFilmDiv form {
+    margin-bottom: 0px;
+    padding: 10px;
+}
+/* SUPPRIMERUSER.PHP */
+#suppUserH1 {
+    text-align: center;
+    margin-bottom: 0px;
+}
+#suppUserDiv {
+    display: block;
+    background-color: #FFFFFF10;
+    max-width: 900px;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    border-radius: 15px;
+}
+#suppUserDiv form {
+    margin-bottom: 0px;
+    padding: 10px;
+}

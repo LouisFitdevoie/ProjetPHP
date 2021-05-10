@@ -3,12 +3,12 @@
 
     include_once('connexionDB.php');
 
-    session_start();
-
+    //On vérifie si l'utilisateur est déjà connecté -> si oui on le redirige vers l'accueil
     if(isset($_SESSION['username'])) {
-        header('Location: index.php');
+        echo '<script>window.location.href = "index.php";</script>';
         exit();
     } else {
+        //On réinitialise les erreurs
         $erreur['captcha'] = false;
         $erreur['champsVides'] = false;
         $erreur['password'] = false;
@@ -34,7 +34,8 @@
                             //On vérifie que le mot de passe ait minimum 5 caractères
                             if(strlen($_POST['password1']) >= 5) {
                                 $password = sha1($_POST['password1']);
-                                $regexUsername = '/^[A-Za-z][A-Za-z0-9]{4,31}$/i';
+                                //On vérifie que le nom d'utilisateur, le nom et le prénom ne commencent ou ne finissent pas par un ou plusieurs espaces
+                                $regexUsername = '/^[A-Za-z][A-Za-z0-9]{3,31}$/i';
                                 $regexNomPrenom = '/^[A-Za-z]{2,31}$/i';
                                 if(preg_match($regexUsername,$_POST['username'])) {
                                     $username = $_POST['username'];
@@ -52,6 +53,7 @@
                                     $erreur['prenom'] = true;
                                 }
 
+                                //On vérifie que le nom d'utilisateur n'existe pas déjà dans la BDD
                                 $verifUsernameNotExist = $bdd->prepare('SELECT * FROM Users WHERE (username=:username)');
                                 $verifUsernameNotExist->bindValue(':username',$username);
                                 $verifUsernameNotExist->execute();
@@ -82,11 +84,11 @@
                                             $req->bindValue(':prenom',ucfirst($prenom));
                                             $req->execute();
                                             $req->closeCursor();
-                                            header('location:index.php');
                     
-                                            $_SESSION['droits'] = $data2[0];
+                                            $_SESSION['droits'] = 0;
                                             $_SESSION['username'] = $username;
-                    
+
+                                            echo '<script>window.location.href = "index.php";</script>';
                                             exit(); 
                                         }
                                     }
@@ -110,127 +112,14 @@
         }
     }
 ?>
-
+<!DOCTYPE html>
 <html lang='fr'>
 <head>
     <title>Inscription</title>
     <meta charset='utf-8'>
     <meta name='author' content='Louis Fitdevoie'>
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <style>
-		body {
-			background-color: rgb(15,15,15);
-			color: white;
-			font-family: Calibri, Arial, sans-serif;
-			display: flex;
-			flex-flow: column nowrap;
-		}
-		#logoSite {
-			max-width: 280px;
-			max-height: 150px;
-			border: 5px solid #555555;
-			border-radius: 22.5px;
-			background-color: rgb(15,15,15);
-		}
-		#menu {
-			display: flex;
-			flex-flow: row nowrap;
-			margin-left: auto;
-			margin-right: auto;
-		}
-		nav {
-			display: flex;
-			flex-flow: row nowrap;
-			align-items: center;
-		}
-		nav a {
-			display: block;
-			border: 2px solid #555555;
-			background-color: #555555;
-			text-decoration: none;
-			color: white;
-			padding: 15px;
-			text-align: center;
-		}
-		@media screen and (max-width: 750px) {
-			/* FAIRE LE MENU BURGER */
-			nav {
-				display: none !important;
-			}
-		}
-		@media screen and (min-width: 750px) and (max-width: 900px) {
-			nav a {
-				font-size: 16px;
-			}
-		}
-		@media screen and (min-width: 900px) {
-			nav a {
-				font-size: 24px;
-			}
-		}
-		nav a:last-child {
-			border-top-right-radius: 22.50px;
-			border-bottom-right-radius: 22.50px;
-		}
-		nav a:hover, nav a:focus {
-			background-color: #EEEEEE;
-			border: 2px solid #353535;
-			color: #555555;
-			transition-duration: 500ms;
-		}
-		nav a:active {
-			background-color: #BBBBBB;
-		}
-		nav a.selected {
-			background-color: #E13930 !important;
-			color: white !important;
-			border: 2px solid #353535;
-		}
-        #inscriptionDiv {
-            display: block;
-            background-color: #FFFFFF10;
-            width: 460px;
-            margin-top: 25px;
-            margin-left: auto;
-            margin-right: auto;
-            text-align: center;
-            border-radius: 15px;
-        }
-        #inscriptionDiv form {
-            margin-bottom: 0px;
-        }
-        #inscriptionDiv table {
-            margin-top: 15px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        #inscriptionDiv #submitBtn {
-            margin-top: 10px;
-            margin-bottom: 15px;
-        }
-        .g-recaptcha > div {
-            margin-left: auto;
-            margin-right: auto;
-            margin-top: 10px;
-        }
-        #submitBtn {
-            font-size: 0.8em;
-            margin-top: 5px;
-            margin-bottom: 5px;
-            padding: 2px 15px;
-            border: 1px solid rgb(15,15,15);
-            border-radius: 5px;
-            background-color: #EEEEEE;
-            color: #555555;
-            cursor: pointer;
-            transition: 350ms;
-        }
-        #submitBtn:hover, #submitBtn:focus {
-            background-color: #555555;
-            color: #EEEEEE;
-            transition: 350ms;
-        }
-    </style>
+    <link rel="stylesheet" href="Ressources/style.css">
 </head>
 <body>
     <?php

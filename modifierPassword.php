@@ -4,12 +4,13 @@
     include_once('connexionDB.php');
 
     session_start();
-
+    //On vérifie que l'utilisateur est bien connecté
     if(isset($_SESSION['username'])) {
         if(isset($_GET['id']) && !empty($_GET['id'])) {
             $regexNb = '/^[0-9]+$/i';
+            //On vérifie que l'ID de l'utilisateur soit bien un nombre
             if(!preg_match($regexNb,$_GET['id'])) {
-                header('Location: films.php');
+                echo '<script>window.location.href = "films.php";</script>';
                 exit();
             } else {
                 $id = $_GET['id'];
@@ -29,22 +30,26 @@
                             //echo 'mauvais user mais admin';
                         } else {
                             //Si pas admin -> redirige vers index.php
-                            header('Location: index.php');
+                            echo '<script>window.location.href = "index.php";</script>';
                             exit();
                         }
                     }
                 } else {
-                    header('Location: index.php');
+                    echo '<script>window.location.href = "index.php";</script>';
                     exit();
                 }
             }
+        //Si l'utilisateur a cliqué sur le bouton pour modifier le password
         } elseif(isset($_POST['modifUser'])) {
+            //On vérifie que l'ID soit bien set
             if(isset($_POST['id']) && !empty($_POST['id'])) {
                 $regexNb = '/^[0-9]+$/i';
+                //On vérifie que l'ID soit bien un nombre
                 if(!preg_match($regexNb,$_POST['id'])) {
-                    header('Location: films.php');
+                    echo '<script>window.location.href = "films.php";</script>';
                     exit();
                 } else {
+                    //On récupère les données de l'utilisateur correspondant à l'ID
                     $id = $_POST['id'];
                     $getUser = $bdd->prepare('SELECT * FROM Users WHERE userId=:id');
                     $getUser->bindValue(':id',$id);
@@ -76,7 +81,7 @@
                                             $changementPassword->bindValue(':id',$id);
                                             $changementPassword->execute();
                                             session_destroy();
-                                            header('Location: login.php');
+                                            echo '<script>window.location.href = "login.php";</script>';
                                             exit();
                                         } else {
                                             $erreur['memePassword'] = true;
@@ -111,7 +116,7 @@
                                                     $changementPassword->bindValue(':id',$id);
                                                     $changementPassword->execute();
                                                     session_destroy();
-                                                    header('Location: login.php');
+                                                    echo '<script>window.location.href = "login.php";</script>';
                                                     exit();
                                                 } else {
                                                     $erreur['memePassword'] = true;
@@ -139,7 +144,7 @@
                                                 $changementPassword->bindValue(':nouveauPassword',$nouveauPassword);
                                                 $changementPassword->bindValue(':id',$id);
                                                 $changementPassword->execute();
-                                                header('Location: admin.php');
+                                                echo '<script>window.location.href = "admin.php";</script>';
                                                 exit();
                                             } else {
                                                 $erreur['memePassword'] = true;
@@ -153,143 +158,33 @@
                                 }
                             } else {
                                 //Si pas admin -> redirige vers index.php
-                                header('Location: index.php');
+                                echo '<script>window.location.href = "index.php";</script>';
                                 exit();
                             }
                         }
                     } else {
-                        header('Location: index.php');
+                        echo '<script>window.location.href = "index.php";</script>';
                         exit();
                     }
                 }
             }
         } else {
-            header('Location: index.php');
+            echo '<script>window.location.href = "index.php";</script>';
+            exit();
         }
     } else {
-        header('Location: index.php');
+        echo '<script>window.location.href = "index.php";</script>';
+        exit();
     }
 ?>
-
+<!DOCTYPE html>
 <html lang='fr'>
 <head>
     <title>Modification du mot de passe</title>
     <meta charset='utf-8'>
     <meta name='author' content='Louis Fitdevoie'>
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <style>
-		body {
-			background-color: rgb(15,15,15);
-			color: white;
-			font-family: Calibri, Arial, sans-serif;
-			display: flex;
-			flex-flow: column nowrap;
-		}
-		#logoSite {
-			max-width: 280px;
-			max-height: 150px;
-			border: 5px solid #555555;
-			border-radius: 22.5px;
-			background-color: rgb(15,15,15);
-		}
-		#menu {
-			display: flex;
-			flex-flow: row nowrap;
-			margin-left: auto;
-			margin-right: auto;
-		}
-		nav {
-			display: flex;
-			flex-flow: row nowrap;
-			align-items: center;
-		}
-		nav a {
-			display: block;
-			border: 2px solid #555555;
-			background-color: #555555;
-			text-decoration: none;
-			color: white;
-			padding: 15px;
-			text-align: center;
-		}
-		@media screen and (max-width: 750px) {
-			/* FAIRE LE MENU BURGER */
-			nav {
-				display: none !important;
-			}
-		}
-		@media screen and (min-width: 750px) and (max-width: 900px) {
-			nav a {
-				font-size: 16px;
-			}
-		}
-		@media screen and (min-width: 900px) {
-			nav a {
-				font-size: 24px;
-			}
-		}
-		nav a:last-child {
-			border-top-right-radius: 22.50px;
-			border-bottom-right-radius: 22.50px;
-		}
-		nav a:hover, nav a:focus {
-			background-color: #EEEEEE;
-			border: 2px solid #353535;
-			color: #555555;
-			transition-duration: 500ms;
-		}
-		nav a:active {
-			background-color: #BBBBBB;
-		}
-		nav a.selected {
-			background-color: #E13930 !important;
-			color: white !important;
-			border: 2px solid #353535;
-		}
-        form {
-            padding: 0 5px;
-        }
-        #modifPasswordDiv {
-            display: block;
-            background-color: #FFFFFF10;
-            width: 520px;
-            margin-top: 25px;
-            margin-left: auto;
-            margin-right: auto;
-            text-align: center;
-            border-radius: 15px;
-        }
-        #modifPasswordDiv form {
-            margin-bottom: 0px;
-        }
-        #modifPasswordDiv table {
-            margin-top: 15px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        #submitBtn {
-            font-size: 0.8em;
-            margin-top: 0px;
-            margin-bottom: 10px;
-            padding: 2px 15px;
-            border: 1px solid rgb(15,15,15);
-            border-radius: 5px;
-            background-color: #EEEEEE;
-            color: #555555;
-            cursor: pointer;
-            transition: 350ms;
-        }
-        #submitBtn:hover, #submitBtn:focus {
-            background-color: #555555;
-            color: #EEEEEE;
-            transition: 350ms;
-        }
-        .g-recaptcha > div {
-            margin-left: auto;
-            margin-right: auto;
-            margin-top: 10px;
-        }
-    </style>
+    <link rel="stylesheet" href="Ressources/style.css">
 </head>
 <body>
     <?php

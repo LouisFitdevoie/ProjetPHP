@@ -1,158 +1,19 @@
 <?php session_start() ?>
+<!DOCTYPE html>
 <html lang='fr'>
 <head>        
     <meta charset='utf-8'>
     <meta name='author' content='Louis Fitdevoie'>
     <title>Ajout de film [Admin]</title>
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <style>
-		body {
-			background-color: rgb(15,15,15);
-			color: white;
-			font-family: Calibri, Arial, sans-serif;
-			display: flex;
-			flex-flow: column nowrap;
-		}
-		#logoSite {
-			max-width: 280px;
-			max-height: 150px;
-			border: 5px solid #555555;
-			border-radius: 22.5px;
-			background-color: rgb(15,15,15);
-		}
-		#menu {
-			display: flex;
-			flex-flow: row nowrap;
-			margin-left: auto;
-			margin-right: auto;
-		}
-		nav {
-			display: flex;
-			flex-flow: row nowrap;
-			align-items: center;
-		}
-		nav a {
-			display: block;
-			border: 2px solid #555555;
-			background-color: #555555;
-			text-decoration: none;
-			color: white;
-			padding: 15px;
-			text-align: center;
-		}
-		@media screen and (max-width: 750px) {
-			/* FAIRE LE MENU BURGER */
-			nav {
-				display: none !important;
-			}
-		}
-		@media screen and (min-width: 750px) and (max-width: 900px) {
-			nav a {
-				font-size: 16px;
-			}
-		}
-		@media screen and (min-width: 900px) {
-			nav a {
-				font-size: 24px;
-			}
-		}
-		nav a:last-child {
-			border-top-right-radius: 22.50px;
-			border-bottom-right-radius: 22.50px;
-		}
-		nav a:hover, nav a:focus {
-			background-color: #EEEEEE;
-			border: 2px solid #353535;
-			color: #555555;
-			transition-duration: 500ms;
-		}
-		nav a:active {
-			background-color: #BBBBBB;
-		}
-		nav a.selected {
-			background-color: #E13930 !important;
-			color: white !important;
-			border: 2px solid #353535;
-		}
-        h1 {
-            text-align: center;
-            margin-bottom: 0px;
-        }
-        #addFilmDiv {
-            display: block;
-            background-color: #FFFFFF10;
-            max-width: 900px;
-            margin-top: 25px;
-            margin-left: auto;
-            margin-right: auto;
-            margin-bottom: 150px;
-            text-align: center;
-            border-radius: 15px;
-        }
-        #addFilmDiv form {
-            margin-bottom: 0px;
-        }
-        #addFilmDiv table {
-            margin-top: 10px;
-            margin-left: auto;
-            margin-right: auto;
-            padding: 10px;
-            text-align: right;
-        }
-        #addFilmDiv #submitBtn {
-            margin-top: 0px;
-            margin-bottom: 10px;
-        }
-        #submitBtn {
-            font-size: 0.8em;
-            margin-top: 5px;
-            margin-bottom: 5px;
-            padding: 2px 15px;
-            border: 1px solid rgb(15,15,15);
-            border-radius: 5px;
-            background-color: #EEEEEE;
-            color: #555555;
-            cursor: pointer;
-            transition: 350ms;
-        }
-        #submitBtn:hover, #submitBtn:focus {
-            background-color: #555555;
-            color: #EEEEEE;
-            transition: 350ms;
-        }
-        table input {
-            width: 100%;
-        }
-        #duree input {
-            width: 46.9%;
-        }
-        #duree input:first-child {
-            margin-right: 5px;
-        }
-        #duree input:last-child {
-            margin-left: 5px;
-        }
-        textarea {
-            resize: none;
-            width: 100%;
-        }
-        table input, #streamingSelect {
-            text-align: center;
-        }
-        .g-recaptcha > div {
-            height: 20px;
-            margin-left: auto;
-            margin-right: auto;
-            margin-top: 10px;
-        }
-    </style>
+    <link rel="stylesheet" href="Ressources/style.css">
 </head>
 <body>
     <?php
         session_start();
         include_once('menu.php');
         include_once('connexionDB.php');
-
+        //Réinitialisation des erreurs
         $erreur['captcha'] = false;
         $erreur['filmExiste'] = false;
         $erreur['bandeAnnonce'] = false;
@@ -160,12 +21,17 @@
         $erreur['imgUpload'] = false;
         $erreur['formatDate'] = false;
         $erreur['duree'] = false;
-        
+        $erreur['resume'] = false;
+        $erreur['acteurs'] = false;
+        $erreur['titre'] = false;
+        $erreur['ordreSortie'] = false;
+        //On vérifie si l'utilisateur est connecté
         if(isset($_SESSION['username'])) {
+            //On vérifie si l'utilisateur a les droits d'admin
             if($_SESSION['droits'] == 1) {
                 //On vérifie si l'utilisateur a bien cliqué sur envoyer
                 if(isset($_POST['addFilm'])) {
-
+                    //On vérifie si l'utilisateur a rempli le Captcha
                     if(!empty($_POST['g-recaptcha-response'])) {
                         $secret = '6LepcKUaAAAAAIkB52vCXMgQ5h4wHjqDG-i4d_mU';
                         $verifyResponse = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret='.$secret.'&response='.$_POST['g-recaptcha-response']);
@@ -173,10 +39,15 @@
                         if($responseData->success) {
 
                             //On vérifie si l'utilisateur a bien rempli les champs de formulaires nécessaires
-                            if(!empty($_POST['titre']) && !empty($_POST['resume']) && !empty($_POST['dateDeSortie']) && !empty($_POST['dureeHeure']) && !empty($_POST['dureeMin']) && !empty($_POST['acteurs']) && !empty($_POST['bandeAnnonce']) && !empty($_FILES['imageLink'])) {
+                            if(!empty($_POST['titre']) && !empty($_POST['resume']) && !empty($_POST['dateDeSortie']) && !empty($_POST['dureeHeure']) && !empty($_POST['dureeMin']) && !empty($_POST['acteurs']) && !empty($_POST['bandeAnnonce']) && !empty($_POST['ordreSortie']) && !empty($_FILES['imageLink'])) {
                                 $plateformesStreaming = ['','Disney+','Netflix'];
-                                
-                                $titre = $_POST['titre'];
+                                //On vérifie que le titre ne commence ou ne finisse pas par un ou plusieurs espaces
+                                $regexTitre = '/^[^\s]+(\s+[^\s]+)*$/i';
+                                if(preg_match($regexTitre,$_POST['titre'])) {
+                                    $titre = $_POST['titre'];
+                                } else {
+                                    $erreur['titre'] = true;
+                                }
                                 $verifyFilmExiste = $bdd->prepare('SELECT * FROM Films WHERE titre=:titre');
                                 $verifyFilmExiste->bindValue(':titre',$titre);
                                 $verifyFilmExiste->execute();
@@ -185,7 +56,12 @@
                                 if($filmExiste) {
                                     $erreur['filmExiste'] = true;
                                 }
-                                $resume = $_POST['resume'];
+                                $regexResume = '/^[^\s]+(\s+[^\s]+)*$/i';
+                                if(preg_match($regexResume,$_POST['resume'])) {
+                                    $resume = $_POST['resume'];
+                                } else {
+                                    $erreur['resume'] = true;
+                                }
                                 $dateDeSortie = $_POST['dateDeSortie'];
         
                                 ////Vérifier si ce qui est entré est bien une date
@@ -223,8 +99,14 @@
                                 } else {
                                     $erreur['duree'] = true;
                                 }
-        
-                                $acteurs = $_POST['acteurs'];
+
+                                //On vérifie que les acteurs entrés ne commencent ou ne finissent pas par un ou plusieurs espaces
+                                $regexActeurs = '/^[^\s]+(\s+[^\s]+)*$/i';
+                                if(preg_match($regexActeurs,$_POST['acteurs'])) {
+                                    $acteurs = $_POST['acteurs'];
+                                } else {
+                                    $erreur['acteurs'] = true;
+                                }
                                 $bandeAnnonce = $_POST['bandeAnnonce'];
         
                                 //Vérifier si ce qui est entré est bien un lien youtube
@@ -252,6 +134,22 @@
                                     }
                                 } else {
                                     $streamingLink = '';
+                                }
+
+                                //Vérifier que le numéro d'ordre de sortie est bien un nombre
+                                $regexNb = '/^[0-9]+$/i';
+                                if(preg_match($regexNb,$_POST['ordreSortie'])) {
+                                    $verifOrdreSortieUtilise = $bdd->prepare('SELECT count(*) FROM Films WHERE ordreSortie=:ordreSortie');
+                                    $verifOrdreSortieUtilise->bindValue(':ordreSortie',$_POST['ordreSortie']);
+                                    $verifOrdreSortieUtilise->execute();
+                                    $ordreSortieUtilise = $verifOrdreSortieUtilise->fetch();
+                                    if($ordreSortieUtilise[0] == 0) {
+                                        $ordreSortie = $_POST['ordreSortie'];
+                                    } else {
+                                        $erreur['ordreSortie'] = true;
+                                    }
+                                } else {
+                                    $erreur['ordreSortie'] = true;
                                 }
         
                                 ////Vérifier le fichier entré pour la photo du film
@@ -286,8 +184,8 @@
                                 }
         
                                 ////Enregistrement dans la BDD
-                                if(!$erreur['filmExiste'] && !$erreur['formatDate'] && !$erreur['duree'] && !$erreur['bandeAnnonce'] && !$erreur['mauvaisLienStreaming'] && !$erreur['imgUpload']) {
-                                    $enregistrementFilm = $bdd->prepare('INSERT INTO Films VALUES (null,:titre,:resumes,:dateDeSortie,:duree,:acteurs,:bandeAnnonce,:streaming,:streamingLink,:imageLink)');
+                                if(!$erreur['filmExiste'] && !$erreur['titre'] && !$erreur['resume'] && !$erreur['formatDate'] && !$erreur['duree'] && !$erreur['acteurs'] && !$erreur['bandeAnnonce'] && !$erreur['mauvaisLienStreaming'] && !$erreur['ordreSortie'] && !$erreur['imgUpload']) {
+                                    $enregistrementFilm = $bdd->prepare('INSERT INTO Films VALUES (null,:titre,:resumes,:dateDeSortie,:duree,:acteurs,:bandeAnnonce,:streaming,:streamingLink,:imageLink,:ordreSortie)');
                                     $enregistrementFilm->bindValue(':titre',$titre);
                                     $enregistrementFilm->bindValue(':resumes',$resume);
                                     $enregistrementFilm->bindValue(':dateDeSortie',$dateDeSortie);
@@ -297,9 +195,10 @@
                                     $enregistrementFilm->bindValue(':streaming',$streaming);
                                     $enregistrementFilm->bindValue(':streamingLink',$streamingLink);
                                     $enregistrementFilm->bindValue(':imageLink',$imageLink);
+                                    $enregistrementFilm->bindValue(':ordreSortie',$ordreSortie);
                                     $enregistrementFilm->execute();
                                     $enregistrementFilm->closeCursor();
-                                    header('Location: films.php');
+                                    echo '<script>window.location.href = "films.php";</script>';
                                     exit();
                                 }
                             } else {
@@ -308,20 +207,19 @@
                         }
                     } else {
                         $erreur['captcha'] = true;
-                        echo 'là';
                     }
                 }
 
             } else {
-                header('Location: index.php');
+                echo '<script>window.location.href = "index.php";</script>';
                 exit();
             }
         } else {
-            header('Location: index.php');
+            echo '<script>window.location.href = "index.php";</script>';
             exit();
         }
     ?>
-    <h1>Ajout de film</h1>
+    <h1 id="addFilmH1">Ajout de film</h1>
     <div id='addFilmDiv'>
         <form method="POST" action="addFilm.php" enctype='multipart/form-data'>
             <table>
@@ -339,7 +237,7 @@
                 </tr>
                 <tr>
                     <td>Durée  : </td>
-                    <td id='duree'><input type='text' name='dureeHeure' required <?php if(isset($_POST['addFilm'])) { echo "value='",$_POST['dureeHeure'],"'"; } ?>>h<input type='text' name='dureeMin' required <?php if(isset($_POST['addFilm'])) { echo "value='",$_POST['dureeMin'],"'"; } ?>></td>
+                    <td id='duree'><div id='dureeDiv'><input type='text' name='dureeHeure' required <?php if(isset($_POST['addFilm'])) { echo "value='",$_POST['dureeHeure'],"'"; } ?>>h<input type='text' name='dureeMin' required <?php if(isset($_POST['addFilm'])) { echo "value='",$_POST['dureeMin'],"'"; } ?>></div></td>
                 </tr>
                 <tr>
                     <td>Acteurs principaux  : </td>
@@ -364,6 +262,32 @@
                     <td><input type='text' name='streamingLink' placeholder='https://www.disneyplus.com/fr-fr/movies/marvel-studios-iron-man/6aM2a8mZATiu' <?php if(isset($_POST['addFilm'])) { echo "value='",$_POST['streamingLink'],"'"; } ?>></td>
                 </tr>
                 <tr>
+                    <td>Numéro d'ordre de sortie du film  : </td>
+                    <td id='ordreSortie'>
+                        <select name='ordreSortie'>
+                            <?php
+                                $getOrdreSortie = $bdd->query('SELECT ordreSortie FROM Films');
+                                $arrayOrder = array();
+                                while($ordreSortie = $getOrdreSortie->fetch()) {
+                                    array_push($arrayOrder,$ordreSortie[0]);
+                                }
+                                sort($arrayOrder);
+                                for($i = 1 ; $i <= end($arrayOrder) + 5 ; $i++) {
+                                    if(!in_array($i , $arrayOrder)) {
+                                        echo '<option value="',$i,'"';
+                                        if(isset($_POST['ordreSortie'])) {
+                                            if($_POST['ordreSortie'] == $i) {
+                                                echo ' selected';
+                                            }
+                                        }
+                                        echo '>',$i,'</option>';
+                                    }
+                                }
+                            ?>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
                     <td>Affiche du film (.jpeg, .jpg ou .png)  : </td>
                     <td><input type='hidden' name='MAX_FILE_SIZE' value='500000'><input type='file' name='imageLink' required></td>
                 </tr>
@@ -378,20 +302,36 @@
                     if($erreur['filmExiste']) {
                         echo '<p style="font-size:0.8em;color:#E13930;margin-top:5px;margin-bottom:5px;">Un film avec le titre entré existe déjà dans la base de données, réessayez !</p>';
                     } else {
-                        if($erreur['formatDate']) {
-                            echo '<p style="font-size:0.8em;color:#E13930;margin-top:5px;margin-bottom:5px;">La date entrée n\'a pas le bon format, réessayez !</p>';
+                        if($erreur['titre']) {
+                            echo '<p style="font-size:0.8em;color:#E13930;margin-top:5px;margin-bottom:5px;">Le titre ne doit pas commencer ni terminer par un ou plusieurs espaces !</p>';
                         } else {
-                            if($erreur['duree']) {
-                                echo '<p style="font-size:0.8em;color:#E13930;margin-top:5px;margin-bottom:5px;">La durée du film n\a pas le bon format, réessayez !</p>';
+                            if($erreur['resume']) {
+                                echo '<p style="font-size:0.8em;color:#E13930;margin-top:5px;margin-bottom:5px;">Le résumé ne doit pas commencer ni terminer par un ou plusieurs espaces !</p>';
                             } else {
-                                if($erreur['bandeAnnonce']) {
-                                    echo '<p style="font-size:0.8em;color:#E13930;margin-top:5px;margin-bottom:5px;">Le lien Youtube est invalide, réessayez !</p>';
+                                if($erreur['formatDate']) {
+                                    echo '<p style="font-size:0.8em;color:#E13930;margin-top:5px;margin-bottom:5px;">La date entrée n\'a pas le bon format, réessayez !</p>';
                                 } else {
-                                    if($erreur['mauvaisLienStreaming']) {
-                                        echo '<p style="font-size:0.8em;color:#E13930;margin-top:5px;margin-bottom:5px;">Le lien de streaming ne mène pas vers la plateforme de streaming sélectionnée, réessayez !</p>';
+                                    if($erreur['duree']) {
+                                        echo '<p style="font-size:0.8em;color:#E13930;margin-top:5px;margin-bottom:5px;">La durée du film n\a pas le bon format, réessayez !</p>';
                                     } else {
-                                        if($erreur['imgUpload']) {
-                                            echo '<p style="font-size:0.8em;color:#E13930;margin-top:5px;margin-bottom:5px;">L\'image n\'a pas pu être uploadée, réessayez !</p>';
+                                        if($erreur['acteurs']) {
+                                            echo '<p style="font-size:0.8em;color:#E13930;margin-top:5px;margin-bottom:5px;">Les acteurs ne doivent pas commencer ou terminer par un ou plusieurs espaces !</p>';
+                                        } else {
+                                            if($erreur['bandeAnnonce']) {
+                                                echo '<p style="font-size:0.8em;color:#E13930;margin-top:5px;margin-bottom:5px;">Le lien Youtube est invalide, réessayez !</p>';
+                                            } else {
+                                                if($erreur['mauvaisLienStreaming']) {
+                                                    echo '<p style="font-size:0.8em;color:#E13930;margin-top:5px;margin-bottom:5px;">Le lien de streaming ne mène pas vers la plateforme de streaming sélectionnée, réessayez !</p>';
+                                                } else {
+                                                    if($erreur['ordreSortie']) {
+                                                        echo '<p style="font-size:0.8em;color:#E13930;margin-top:5px;margin-bottom:5px;">Le numéro d\'ordre de sortie n\'est pas un nombre correct, réessayez !</p>';
+                                                    } else {
+                                                        if($erreur['imgUpload']) {
+                                                            echo '<p style="font-size:0.8em;color:#E13930;margin-top:5px;margin-bottom:5px;">L\'image n\'a pas pu être uploadée, réessayez !</p>';
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         }
                                     }
                                 }
