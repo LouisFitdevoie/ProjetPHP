@@ -83,6 +83,7 @@ nav a.selected {
     margin-top: 10px;
     margin-left: auto;
     margin-right: auto;
+    text-align: right;
 }
 #submitBtn {
     font-size: 0.8em;
@@ -119,6 +120,7 @@ nav a.selected {
     margin-top: 15px;
     margin-left: auto;
     margin-right: auto;
+    text-align: right;
 }
 #inscriptionDiv #submitBtn {
     margin-top: 10px;
@@ -205,8 +207,15 @@ nav a.selected {
     vertical-align: middle;
 }
 div.userTable {
-    margin-left: 25px;
+    margin-left: auto;
+    margin-right: auto;
     margin-bottom: 20px;
+}
+table.user {
+    width: 100%;
+}
+table.user td {
+    width: 50%;
 }
 table.user td, table.user th {
     border: 1px solid white;
@@ -635,6 +644,7 @@ div#comments h2 {
     margin-top: 15px;
     margin-left: auto;
     margin-right: auto;
+    text-align: right;
 }
 #modifPasswordDiv #submitBtn {
     margin-top: 0px;
@@ -700,7 +710,6 @@ a#deleteUser {
     width: 600px;
     max-height: 350px;
     overflow-y: scroll;
-    scrollbar-width: thin;
     margin: 10px;
     padding: 0px;
 }

@@ -83,6 +83,18 @@
                     $_SESSION['erreurContent'] = '';
                     echo '<script>window.location.href = "infosFilm.php?id=',$filmId,'";</script>';
                     exit();
+                } else {
+                    if(isset($_POST['filmId']) && !empty($_POST['filmId'])) {
+                        $regexNombre = '/^[0-9]*/i';
+                        if(preg_match($regexNombre,$_POST['filmId'])) {
+                            echo '<script>window.location.href = "',$location,'";</script>';
+                        } else {
+                            echo '<script>window.location.href = "films.php";</script>';
+                            exit();
+                        }
+                    } else {
+                        echo '<script>window.location.href = "films.php";</script>';
+                    }
                 }
 
             } else {

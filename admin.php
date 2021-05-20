@@ -10,7 +10,6 @@
 </head>
 <body>
     <?php
-        session_start();
         include_once('menu.php');
         echo "<script>document.getElementById('adminMenu').setAttribute('class','selected');</script>";
         include_once('connexionDB.php');
@@ -27,7 +26,7 @@
                     echo "<div class='userTable'>";
                     echo '<table class="user">';
                     echo '<tr><th colspan=2 class="adminTh">Utilisateur ',$nbUser,'</th></tr>';
-                    echo '<tr><td>User ID :</td><td>',$data['userId'],'</td></tr><tr><td>Username :</td><td>',$data['username'],"</td></tr><tr><td>Nom :</td><td>",$data['nom'],"</td><tr><td>Prénom :</td><td>", $data['prenom'], '</td></tr><tr><td>Mot de passe :</td><td>', $data['password'],'</td></tr><tr><td>Droits :</td><td>', $data['droits'],"</td></tr></table>";
+                    echo '<tr><td>User ID :</td><td>',$data['userId'],'</td></tr><tr><td>Username :</td><td>',$data['username'],"</td></tr><tr><td>Nom :</td><td>",$data['nom'],"</td><tr><td>Prénom :</td><td>", $data['prenom'], '</td></tr><tr><td>Droits :</td><td>', $data['droits'],"</td></tr></table>";
                     echo '<div class="buttonsDiv"><a href="modifierPassword.php?id=',$data['userId'],'" class="buttonLeft">Modifier le mot de passe</a><a href="supprimerUser.php?id=',$data['userId'],'" class="buttonRight">Supprimer cet utilisateur</a></div>';
                     echo "</div>";
                 }

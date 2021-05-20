@@ -90,12 +90,11 @@
                             echo '<div id="newMessage">';
                                 echo '<h3>Envoyer un message à l\'administrateur</h3>';
                                 echo '<form method="POST" action="envoyerMessage.php">';
-                                    echo '<input type="hidden" name="destinataireId" value="1">'; //Value = 1 -> admin à l'userId 1
+                                    echo '<input type="hidden" name="destinataireId" value="1">'; //Value = 1 -> admin a l'userId 1
                                     echo '<textarea name="content" id="messageContent" placeholder="Entrez votre message ici..."></textarea>';
                                     echo '<div id="btnDiv"><input type="submit" name="addMessage" id="addMessageBtn" value="Envoyer"></div>';
                                 echo '</form>';
                             echo '</div>';
-                        echo '</div>';
                     } elseif($_SESSION['droits'] == 1) {
                         //Si l'utilisateur a les droits d'administration
                         //On récupère son ID d'utilisateur
@@ -167,7 +166,6 @@
                                         echo '<div id="btnDiv"><input type="submit" name="addMessage" id="addMessageBtn" value="Envoyer"></div>';
                                     echo '</form>';
                                 echo '</div>';
-                            echo '</div>';
                         }
                     }
                 }
@@ -180,7 +178,6 @@
         <script>
             $(document).ready(function() {
                 $('.repondreBtn',this).click(function() {
-                    console.log($(this).attr('id'));
                     $('#newMessageContainer').removeClass('hidden');
                     $('#repondreH3').text("Répondre à " + $(this).attr('id'));
                     $('#destinataireId').attr("value",$(this).children('p').text());

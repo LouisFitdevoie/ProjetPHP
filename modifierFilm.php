@@ -10,7 +10,6 @@
 </head>
 <body>
     <?php
-        session_start();
         include_once('menu.php');
         include_once("connexionDB.php");
 

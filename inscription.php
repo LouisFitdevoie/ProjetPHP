@@ -66,8 +66,8 @@
                                     //echo "Username ok<br>";
                                     if(!$erreur['usernameIncorrect'] && !$erreur['nom'] && !$erreur['prenom']) {
                                         $verifNomPrenomNotExist = $bdd->prepare('SELECT * FROM Users WHERE (nom=:nom AND prenom=:prenom)');
-                                        $verifNomPrenomNotExist->bindValue(':nom',$nom);
-                                        $verifNomPrenomNotExist->bindValue(':prenom',$prenom);
+                                        $verifNomPrenomNotExist->bindValue(':nom',ucfirst($nom));
+                                        $verifNomPrenomNotExist->bindValue(':prenom',ucfirst($prenom));
                                         $verifNomPrenomNotExist->execute();
                                         $nomPrenomExist = $verifNomPrenomNotExist->fetch();
                     

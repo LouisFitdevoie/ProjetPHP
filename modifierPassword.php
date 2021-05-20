@@ -3,7 +3,6 @@
 
     include_once('connexionDB.php');
 
-    session_start();
     //On vérifie que l'utilisateur est bien connecté
     if(isset($_SESSION['username'])) {
         if(isset($_GET['id']) && !empty($_GET['id'])) {
@@ -191,7 +190,7 @@
         include_once("menu.php");
     ?>
     <div id='modifPasswordDiv'>
-        <h3>Modifier le mot de passe de <?php echo $getUserFetch['username']; ?>*</h3>
+        <h3>Modifier le mot de passe de <?php echo $getUserFetch['username']; ?> <?php if($_SESSION['username'] == $getUserFetch['username']) { echo '*'; } ?></h3>
         <form method='POST' action='modifierPassword.php'>
             <table>
                 <?php
@@ -211,8 +210,11 @@
                     <td><input type='password' name='password2' required></td>
                 </tr>
             </table>
-            <p style="font-size:0.8em">*Vous serez déconnecté, vous devrez donc vous reconnecter après avoir modifié votre mot de passe !</p>
+            
             <?php
+                if($_SESSION['username'] == $getUserFetch['username']) {
+                    echo '<p style="font-size:0.8em">*Vous serez déconnecté, vous devrez donc vous reconnecter après avoir modifié votre mot de passe !</p>';
+                }
                 if($erreur['ancienPasswordIncorrect']) {
                     echo '<p style="font-size:0.8em;color:#E13930;margin-top:5px;margin-bottom:5px;">L\'ancien mot de passe est incorrect, réessayez !</p>';
                 } else {
