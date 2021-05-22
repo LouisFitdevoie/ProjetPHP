@@ -24,15 +24,17 @@
         $req = $bdd->query('SELECT * FROM Films ORDER BY ordreSortie');
 
         echo '<div id="colonneFilms">';
+        $nb = 1;
         while($data = $req->fetch()) {
             echo '<div class="film">';
             echo '<img src="Ressources/img/films/',$data['imageLink'],'" class="filmImage" alt="Affiche du film ',$data['titre'],'">';
             echo '<div>';
-            echo '<h2>',$data['ordreSortie'],') ',$data['titre'],'</h2>';
+            echo '<h2>',$nb,') ',$data['titre'],'</h2>';
             echo '<a href="infosFilm.php?id=',$data["filmId"],'">&#x2794; Plus d\'informations</a>';
             echo '</div>';
             echo '</div>';
             echo '<div class="ligne"><div></div></div>';
+            $nb++;
         }
         echo '</div>';
     ?>    
