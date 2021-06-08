@@ -183,7 +183,12 @@
                                     if($ordreSortieUtilise[0] == 0) {
                                         $ordreSortie = $_POST['ordreSortie'];
                                     } else {
-                                        $erreur['ordreSortie'] = true;
+                                        //CORRECTION DU BUG qui empêchait d'enregistrer les modifications du film sans modifier le numéro d'ordre de sortie du film
+                                        if($dataAvantModifFetched['ordreSortie'] == $_POST['ordreSortie']) {
+                                            $ordreSortie = $_POST['ordreSortie'];
+                                        } else {
+                                            $erreur['ordreSortie'] = true;
+                                        }
                                     }
                                 } else {
                                     $erreur['ordreSortie'] = true;
